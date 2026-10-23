@@ -1,0 +1,6 @@
+.env
+data/*.csv
+artifacts/
+*.ipynb
+__pycache__/
+*.py[cod]

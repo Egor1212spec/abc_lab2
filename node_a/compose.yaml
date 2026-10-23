@@ -1,0 +1,12 @@
+services:
+  data-processor:
+    build: .
+    container_name: data-processor
+    env_file: .env
+    environment:
+      DATA_DIR: /home/DATA
+      RAW_DATA_PATH: /home/DATA/raw_data.csv
+      CLEAN_DATA_PATH: /home/DATA/clean_data.csv
+    volumes:
+      - ./data:/home/DATA
+    restart: unless-stopped

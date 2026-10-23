@@ -1,0 +1,26 @@
+services:
+  data-processor-local:
+    build: ./node_a
+    container_name: data-processor-local
+    environment:
+      DATA_DIR: /home/DATA
+      RAW_DATA_PATH: /home/DATA/raw_data.csv
+      CLEAN_DATA_PATH: /home/DATA/clean_data.csv
+      TARGET_COLUMN: species
+    volumes:
+      - ./node_a/data:/home/DATA
+
+  ml-trainer-local:
+    build: ./node_b
+    container_name: ml-trainer-local
+    environment:
+      DATA_PATH: /home/DATA/clean_data.csv
+      ARTIFACT_DIR: /home/MODEL
+      TARGET_COLUMN: species
+      TEST_SIZE: "0.2"
+      RANDOM_STATE: "42"
+    volumes:
+      - ./node_b/data:/home/DATA:ro
+      - ./node_b/artifacts:/home/MODEL
+    ports:
+      - "127.0.0.1:5000:5000"
